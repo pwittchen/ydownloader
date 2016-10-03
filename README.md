@@ -35,3 +35,5 @@ To show help, type:
 ```
 ./ydownloader -h
 ```
+
+**Hint**: Script will ask you for Commerce Suite version, artifact type (snapshot or release), username (e-mail) and password.

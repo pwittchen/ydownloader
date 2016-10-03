@@ -63,6 +63,7 @@ function showCommerceSuiteDownloadUrl() {
 
 function downloadCommerceSuite() {
   setCommerceSuiteDownloadUrl
+  echo $'\nstarted downloading Commerce Suite from Artifactory...\n'
   wget --http-user=$USERNAME --http-password=$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL
 
 }

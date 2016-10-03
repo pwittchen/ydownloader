@@ -36,3 +36,9 @@ To configure downloader, edit `ydownloader.conf` file and set appropriate versio
 COMMERCE_SUITE_VERSION=latest
 ARTIFACT_TYPE=release
 ```
+
+To show help, type:
+
+```
+./ydownloader -h
+```

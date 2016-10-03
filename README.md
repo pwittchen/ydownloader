@@ -1,5 +1,5 @@
 # ydownloader
-Shell script for downloading SAP Hybris Commerce Suite
+shell script for downloading SAP Hybris Commerce Suite
 
 Overview
 --------

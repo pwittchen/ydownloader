@@ -30,13 +30,6 @@ To download Commerce Suite, type:
 ./ydownloader -d
 ```
 
-To configure downloader, edit `ydownloader.conf` file and set appropriate version (`latest` or concrete - e.g. `6.2`) and artifact type (`release` or `snapshot`). Default configuration looks as follows:
-
-```
-COMMERCE_SUITE_VERSION=latest
-ARTIFACT_TYPE=release
-```
-
 To show help, type:
 
 ```

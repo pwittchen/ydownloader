@@ -2,8 +2,6 @@
 
 set -e # automatically exit script on error
 
-source ydownloader.conf # load configuration
-
 function showHelp() {
   echo "
         ydownloader is a script responsible
@@ -17,33 +15,44 @@ function showHelp() {
         "
 }
 
-function setCommerceSuiteVersionIfNecessary() {
-  if [ "$COMMERCE_SUITE_VERSION" == "latest" ]
+function setCommerceSuiteVersion() {
+  echo -n "SAP Hybris Commerce Suite version (leave empty for the latest): "
+  read -s COMMERCE_SUITE_VERSION
+  echo ""
+}
+
+function setArtifactType() {
+  echo -n "Set artifact type (leave empty for release): "
+  read -s ARTIFACT_TYPE
+
+  if [ "$ARTIFACT_TYPE" == "" ]
   then
-    COMMERCE_SUITE_VERSION="" # when we leave this variable empty, we'll get the latest suite
+    ARTIFACT_TYPE="release"
   fi
+  echo ""
 }
 
 function setUsernameAndPassword() {
   echo -n "SAP username (e-mail): "
-  read username
+  read USERNAME
   echo -n "SAP password: "
-  read -s password
+  read -s PASSWORD
 }
 
 function setCommerceSuiteDownloadUrl {
-  setCommerceSuiteVersionIfNecessary
+  setCommerceSuiteVersion
+  setArtifactType
   setUsernameAndPassword
 
   echo $'\ngetting Commerce Suite download url from Artifactory...'
 
   # get first endpoint for downloading Commerce Suite through Artifactory REST API
-  COMMERCE_SUITE_DOWNLOAD_URL_PREPARATION=`curl -s -u $username:$password \
+  COMMERCE_SUITE_DOWNLOAD_URL_PREPARATION=`curl -s -u $USERNAME:$PASSWORD \
   https://repository.hybris.com/api/search/artifact\?name\=commerce-suite-$COMMERCE_SUITE_VERSION\&repos\=hybris-$ARTIFACT_TYPE \
   | python -mjson.tool | grep zip | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//'`
 
   # get exact url of Commerce Suite from previously extracted endpoint
-  COMMERCE_SUITE_DOWNLOAD_URL=`curl -s -u $username:$password $COMMERCE_SUITE_DOWNLOAD_URL_PREPARATION \
+  COMMERCE_SUITE_DOWNLOAD_URL=`curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_PREPARATION \
   | python -mjson.tool | grep downloadUri | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//' | rev | cut -c 3- | rev`
 }
 
@@ -54,7 +63,7 @@ function showCommerceSuiteDownloadUrl() {
 
 function downloadCommerceSuite() {
   setCommerceSuiteDownloadUrl
-  wget --http-user=$username --http-password=$password $COMMERCE_SUITE_DOWNLOAD_URL
+  wget --http-user=$USERNAME --http-password=$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL
 
 }
 

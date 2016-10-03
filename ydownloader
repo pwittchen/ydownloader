@@ -22,7 +22,7 @@ function setCommerceSuiteVersion() {
 }
 
 function setArtifactType() {
-  echo -n "Set artifact type (leave empty for release): "
+  echo -n "Set artifact type (release or snapshot - leave empty for release): "
   read -s ARTIFACT_TYPE
 
   if [ "$ARTIFACT_TYPE" == "" ]

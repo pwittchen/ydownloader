@@ -36,7 +36,6 @@ sh -c "$(wget https://raw.githubusercontent.com/pwittchen/ydownloader/master/ins
 with **curl**:
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/pwittchen/ydownloader/master/install.sh)"
-
 ```
 
 Usage

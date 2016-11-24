@@ -17,13 +17,13 @@ function showHelp() {
 
 function setCommerceSuiteVersion() {
   echo -n "SAP Hybris Commerce Suite version (leave empty for the latest): "
-  read -s COMMERCE_SUITE_VERSION
+  read COMMERCE_SUITE_VERSION
   echo ""
 }
 
 function setArtifactType() {
   echo -n "Set artifact type (release or snapshot - leave empty for release): "
-  read -s ARTIFACT_TYPE
+  read ARTIFACT_TYPE
 
   if [ "$ARTIFACT_TYPE" == "" ]
   then

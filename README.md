@@ -17,6 +17,22 @@ Usage:
   -h    showing help
 ```
 
+Installation
+------------
+
+You can install script locally to access it system-wide.
+
+with **wget**:
+```
+sh -c "$(wget https://raw.githubusercontent.com/pwittchen/ydownloader/master/install.sh -O -)"
+```
+
+with **curl**:
+```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/pwittchen/ydownloader/master/install.sh)"
+
+```
+
 Usage
 -----
 

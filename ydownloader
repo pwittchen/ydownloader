@@ -65,7 +65,6 @@ function downloadCommerceSuite() {
   setCommerceSuiteDownloadUrl
   echo $'\nstarting download of Commerce Suite from Artifactory...'
   wget --http-user=$USERNAME --http-password=$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL
-
 }
 
 OPTIND=1 # Reset in case getopts has been used previously in the shell.

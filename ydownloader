@@ -50,44 +50,44 @@ function setCommerceSuiteDownloadUrl() {
 
 # get first endpoint for downloading Commerce Suite through Artifactory REST API
 function setDownloadEndpoint() {
-  setRequestUrlEndpoint
-  parseResponseUrlEndpoint
+  setResponseWithUrlEndpoint
+  parseResponseUrlWithEndpoint
 }
 
-function setRequestUrlEndpoint() {
-  REQUEST_URL_ENDPOINT=$(curl -s -u $USERNAME:$PASSWORD \
+function setResponseWithUrlEndpoint() {
+  RESPONSE_WITH_URL_ENDPOINT=$(curl -s -u $USERNAME:$PASSWORD \
   https://repository.hybris.com/api/search/artifact\?name\=commerce-suite-$COMMERCE_SUITE_VERSION\&repos\=hybris-$ARTIFACT_TYPE)
 }
 
-function parseResponseUrlEndpoint() {
-  COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT=`echo $REQUEST_URL_ENDPOINT \
+function parseResponseUrlWithEndpoint() {
+  COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT=`echo $RESPONSE_WITH_URL_ENDPOINT \
   | python -mjson.tool | grep zip | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//'`
 }
 
 # get exact url of Commerce Suite from previously extracted endpoint
 function setDownloadZipFileUrl() {
-  setRequestUrlZip
-  parseResponseUrlZip
+  setResponseWithUrlWithZipFile
+  parseResponseUrlWithZipFile
 }
 
-function setRequestUrlZip() {
-  REQUEST_URL_ZIP=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
+function setResponseWithUrlWithZipFile() {
+  RESPONSE_URL_WITH_ZIP_FILE=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
 }
 
-function parseResponseUrlZip() {
-  COMMERCE_SUITE_URL_ZIP=`echo $REQUEST_URL_ZIP \
+function parseResponseUrlWithZipFile() {
+  COMMERCE_SUITE_URL_ZIP_FILE=`echo $RESPONSE_URL_WITH_ZIP_FILE \
   | python -mjson.tool | grep downloadUri | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//' | rev | cut -c 3- | rev`
 }
 
 function showCommerceSuiteDownloadUrl() {
   setCommerceSuiteDownloadUrl
-  echo $COMMERCE_SUITE_URL_ZIP
+  echo $COMMERCE_SUITE_URL_ZIP_FILE
 }
 
 function downloadCommerceSuite() {
   setCommerceSuiteDownloadUrl
   echo $'\nstarting download of Commerce Suite from Artifactory...'
-  wget --http-user=$USERNAME --http-password=$PASSWORD $COMMERCE_SUITE_URL_ZIP
+  wget --http-user=$USERNAME --http-password=$PASSWORD $COMMERCE_SUITE_URL_ZIP_FILE
 }
 
 OPTIND=1 # Reset in case getopts has been used previously in the shell.

@@ -66,11 +66,11 @@ function parseResponseUrlWithEndpoint() {
 
 # get exact url of Commerce Suite from previously extracted endpoint
 function setDownloadZipFileUrl() {
-  setResponseWithUrlWithZipFile
+  setResponseUrlWithZipFile
   parseResponseUrlWithZipFile
 }
 
-function setResponseWithUrlWithZipFile() {
+function setResponseUrlWithZipFile() {
   RESPONSE_URL_WITH_ZIP_FILE=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
 }
 

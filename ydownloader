@@ -55,12 +55,12 @@ function setDownloadEndpoint() {
 }
 
 function setRequestUrlEndpoint() {
-  RESPONSE_URL_ENDPOINT=$(curl -s -u $USERNAME:$PASSWORD \
+  REQUEST_URL_ENDPOINT=$(curl -s -u $USERNAME:$PASSWORD \
   https://repository.hybris.com/api/search/artifact\?name\=commerce-suite-$COMMERCE_SUITE_VERSION\&repos\=hybris-$ARTIFACT_TYPE)
 }
 
 function parseResponseUrlEndpoint() {
-  COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT=`echo $RESPONSE_URL_ENDPOINT \
+  COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT=`echo $REQUEST_URL_ENDPOINT \
   | python -mjson.tool | grep zip | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//'`
 }
 
@@ -71,11 +71,11 @@ function setDownloadZipFileUrl() {
 }
 
 function setRequestUrlZip() {
-  RESPONSE_URL_ZIP=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
+  REQUEST_URL_ZIP=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
 }
 
 function parseResponseUrlZip() {
-  COMMERCE_SUITE_URL_ZIP=`echo $RESPONSE_URL_ZIP \
+  COMMERCE_SUITE_URL_ZIP=`echo $REQUEST_URL_ZIP \
   | python -mjson.tool | grep downloadUri | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//' | rev | cut -c 3- | rev`
 }
 

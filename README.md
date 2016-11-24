@@ -36,22 +36,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/pwittchen/ydownloader/mast
 Usage
 -----
 
-To show download URL, type:
-
-```shell
-./ydownloader -u
-```
-
-To download Commerce Suite, type:
-
-```shell
-./ydownloader -d
-```
-
-To show help, type:
-
-```
-./ydownloader -h
-```
+- to show download URL, type: `./ydownloader -u`
+- to download Commerce Suite, type: `./ydownloader -d`
+- to show help, type: `./ydownloader -h`
 
 **Hint**: Script will ask you for Commerce Suite version, artifact type (snapshot or release), username (e-mail) and password.

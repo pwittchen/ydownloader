@@ -15,7 +15,7 @@ Overview
 ```
   ydownloader is a script responsible
   for downloading SAP Hybris Commerce Suite from Artifactory
-  and showing its download URL
+
   Usage:
     -d    downloading Commerce Suite
     -u    showing Commerce Suite Download Url

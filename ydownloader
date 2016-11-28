@@ -80,7 +80,7 @@ function parseResponseUrlWithZipFile() {
 
 function setCommerceSuiteReleaseTime() {
   COMMERCE_SUITE_RELEASE_TIME=`echo $RESPONSE_URL_WITH_DETAILS \
-  | python -mjson.tool | grep lastUpdated | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//' | rev | cut -c 3- | rev`
+  | python -mjson.tool | grep lastUpdated | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//' | rev | cut -c 3- | rev`
 }
 
 function showCommerceSuiteDownloadUrl() {

@@ -68,24 +68,24 @@ function cutLastChars() {
   rev | cut -c "$1"- | rev
 }
 
-function parseResponse() {
+function getValueFromResponse() {
   echo $RESPONSE_URL_WITH_DETAILS | extractValueFromJson $1 | cutLastChars 3
 }
 
 function showCommerceSuiteDownloadUrl() {
   setCommerceSuiteDownloadUrl
-  echo $(parseResponse downloadUri)
+  echo $(getValueFromResponse downloadUri)
 }
 
 function showCommerceSuiteReleaseTime() {
   setCommerceSuiteDownloadUrl
-  echo $(parseResponse lastUpdated)
+  echo $(getValueFromResponse lastUpdated)
 }
 
 function downloadCommerceSuite() {
   setCommerceSuiteDownloadUrl
   echo $'\nstarting download of Commerce Suite from Artifactory...'
-  wget --http-user=$USERNAME --http-password=$PASSWORD $(parseResponse downloadUri)
+  wget --http-user=$USERNAME --http-password=$PASSWORD $(getValueFromResponse downloadUri)
 }
 
 OPTIND=1 # reset in case getopts has been used previously in the shell.

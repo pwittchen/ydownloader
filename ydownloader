@@ -58,7 +58,7 @@ function setDownloadEndpoint() {
   RESPONSE_URL_WITH_DETAILS=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
 }
 
-# extracts value of a given parameter from JSON data
+# extract value of a given parameter from JSON data
 function extractValueFromJson() {
   python -mjson.tool | grep $1 | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//'
 }
@@ -88,7 +88,7 @@ function downloadCommerceSuite() {
   wget --http-user=$USERNAME --http-password=$PASSWORD $(parseResponse downloadUri)
 }
 
-OPTIND=1 # Reset in case getopts has been used previously in the shell.
+OPTIND=1 # reset in case getopts has been used previously in the shell.
 
 while getopts "hutd" opt; do
     case "$opt" in

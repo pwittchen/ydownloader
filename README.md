@@ -13,14 +13,14 @@ Overview
 --------
 
 ```
-ydownloader is a script responsible
-for downloading SAP Hybris Commerce Suite from Artifactory
-and showing its download URL
-
-Usage:
-  -d    downloading Commerce Suite
-  -u    showing Commerce Suite Download Url
-  -h    showing help
+  ydownloader is a script responsible
+  for downloading SAP Hybris Commerce Suite from Artifactory
+  and showing its download URL
+  Usage:
+    -d    downloading Commerce Suite
+    -u    showing Commerce Suite Download Url
+    -t    showing Commerce Suite Release Time
+    -h    showing help
 ```
 
 Installation
@@ -37,12 +37,3 @@ with **curl**:
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/pwittchen/ydownloader/master/install.sh)"
 ```
-
-Usage
------
-
-- to show download URL, type: `./ydownloader -u`
-- to download Commerce Suite, type: `./ydownloader -d`
-- to show help, type: `./ydownloader -h`
-
-**Hint**: Script will ask you for Commerce Suite version, artifact type (snapshot or release), username (e-mail) and password.

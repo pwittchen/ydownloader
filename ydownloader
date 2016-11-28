@@ -47,6 +47,17 @@ function setCommerceSuiteDownloadUrl() {
   setDownloadEndpoint
 }
 
+function setDownloadEndpoint() {
+  # perform first API call
+  API_URL="https://repository.hybris.com/api"
+  RESPONSE_WITH_URL_ENDPOINT=$(curl -s -u $USERNAME:$PASSWORD \
+  $API_URL/search/artifact\?name\=commerce-suite-$COMMERCE_SUITE_VERSION\&repos\=hybris-$ARTIFACT_TYPE)
+  # get first endpoint for downloading Commerce Suite through Artifactory REST API
+  COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT=$(echo $RESPONSE_WITH_URL_ENDPOINT | extractValueFromJson zip)
+  # get second endpoint from previously extracted endpoint from which download uri can be extracted
+  RESPONSE_URL_WITH_DETAILS=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
+}
+
 # extracts value of a given parameter from JSON data
 function extractValueFromJson() {
   python -mjson.tool | grep $1 | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//'
@@ -57,49 +68,24 @@ function cutLastChars() {
   rev | cut -c "$1"- | rev
 }
 
-# get first endpoint for downloading Commerce Suite through Artifactory REST API
-function setDownloadEndpoint() {
-  setResponseWithUrlEndpoint
-  COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT=`echo $RESPONSE_WITH_URL_ENDPOINT | extractValueFromJson zip`
-}
-
-function setResponseWithUrlEndpoint() {
-  API_URL="https://repository.hybris.com/api"
-  RESPONSE_WITH_URL_ENDPOINT=$(curl -s -u $USERNAME:$PASSWORD \
-  $API_URL/search/artifact\?name\=commerce-suite-$COMMERCE_SUITE_VERSION\&repos\=hybris-$ARTIFACT_TYPE)
-}
-
-# get exact url of Commerce Suite from previously extracted endpoint
-function setDownloadZipFileUrl() {
-  setResponseUrlWithDetails
-  COMMERCE_SUITE_URL_ZIP_FILE=$(parseResponse downloadUri)
-}
-
-function setResponseUrlWithDetails() {
-  RESPONSE_URL_WITH_DETAILS=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
-}
-
 function parseResponse() {
   echo $RESPONSE_URL_WITH_DETAILS | extractValueFromJson $1 | cutLastChars 3
 }
 
 function showCommerceSuiteDownloadUrl() {
   setCommerceSuiteDownloadUrl
-  setDownloadZipFileUrl
-  echo $COMMERCE_SUITE_URL_ZIP_FILE
+  echo $(parseResponse downloadUri)
 }
 
 function showCommerceSuiteReleaseTime() {
   setCommerceSuiteDownloadUrl
-  setResponseUrlWithDetails
   echo $(parseResponse lastUpdated)
 }
 
 function downloadCommerceSuite() {
   setCommerceSuiteDownloadUrl
-  setDownloadZipFileUrl
   echo $'\nstarting download of Commerce Suite from Artifactory...'
-  wget --http-user=$USERNAME --http-password=$PASSWORD $COMMERCE_SUITE_URL_ZIP_FILE
+  wget --http-user=$USERNAME --http-password=$PASSWORD $(parseResponse downloadUri)
 }
 
 OPTIND=1 # Reset in case getopts has been used previously in the shell.

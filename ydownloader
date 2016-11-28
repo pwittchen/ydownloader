@@ -60,7 +60,7 @@ function cutLastChars() {
 # get first endpoint for downloading Commerce Suite through Artifactory REST API
 function setDownloadEndpoint() {
   setResponseWithUrlEndpoint
-  parseResponseUrlWithEndpoint
+  COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT=`echo $RESPONSE_WITH_URL_ENDPOINT | extractValueFromJson zip`
 }
 
 function setResponseWithUrlEndpoint() {
@@ -69,26 +69,18 @@ function setResponseWithUrlEndpoint() {
   $API_URL/search/artifact\?name\=commerce-suite-$COMMERCE_SUITE_VERSION\&repos\=hybris-$ARTIFACT_TYPE)
 }
 
-function parseResponseUrlWithEndpoint() {
-  COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT=`echo $RESPONSE_WITH_URL_ENDPOINT | extractValueFromJson zip`
-}
-
 # get exact url of Commerce Suite from previously extracted endpoint
 function setDownloadZipFileUrl() {
   setResponseUrlWithDetails
-  parseResponseUrlWithZipFile
+  COMMERCE_SUITE_URL_ZIP_FILE=$(parseResponse downloadUri)
 }
 
 function setResponseUrlWithDetails() {
   RESPONSE_URL_WITH_DETAILS=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
 }
 
-function parseResponseUrlWithZipFile() {
-  COMMERCE_SUITE_URL_ZIP_FILE=`echo $RESPONSE_URL_WITH_DETAILS | extractValueFromJson downloadUri | cutLastChars 3`
-}
-
-function setCommerceSuiteReleaseTime() {
-  COMMERCE_SUITE_RELEASE_TIME=`echo $RESPONSE_URL_WITH_DETAILS | extractValueFromJson lastUpdated | cutLastChars 3`
+function parseResponse() {
+  echo $RESPONSE_URL_WITH_DETAILS | extractValueFromJson $1 | cutLastChars 3
 }
 
 function showCommerceSuiteDownloadUrl() {
@@ -100,8 +92,7 @@ function showCommerceSuiteDownloadUrl() {
 function showCommerceSuiteReleaseTime() {
   setCommerceSuiteDownloadUrl
   setResponseUrlWithDetails
-  setCommerceSuiteReleaseTime
-  echo $COMMERCE_SUITE_RELEASE_TIME
+  echo $(parseResponse lastUpdated)
 }
 
 function downloadCommerceSuite() {

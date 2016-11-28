@@ -26,8 +26,6 @@ Overview
 Installation
 ------------
 
-You can install script locally to access it system-wide.
-
 with **wget**:
 ```
 sh -c "$(wget https://raw.githubusercontent.com/pwittchen/ydownloader/master/install.sh -O -)"

@@ -11,6 +11,7 @@ function showHelp() {
         Usage:
           -d    downloading Commerce Suite
           -u    showing Commerce Suite Download Url
+          -t    showing Commerce Suite Release Time
           -h    showing help
         "
 }
@@ -42,10 +43,9 @@ function setCommerceSuiteDownloadUrl() {
   setArtifactType
   setUsernameAndPassword
 
-  echo $'\ngetting Commerce Suite download url from Artifactory...'
+  echo $'\ngetting Commerce Suite details from Artifactory...'
 
   setDownloadEndpoint
-  setDownloadZipFileUrl
 }
 
 # get first endpoint for downloading Commerce Suite through Artifactory REST API
@@ -66,39 +66,55 @@ function parseResponseUrlWithEndpoint() {
 
 # get exact url of Commerce Suite from previously extracted endpoint
 function setDownloadZipFileUrl() {
-  setResponseUrlWithZipFile
+  setResponseUrlWithDetails
   parseResponseUrlWithZipFile
 }
 
-function setResponseUrlWithZipFile() {
-  RESPONSE_URL_WITH_ZIP_FILE=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
+function setResponseUrlWithDetails() {
+  RESPONSE_URL_WITH_DETAILS=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
 }
 
 function parseResponseUrlWithZipFile() {
-  COMMERCE_SUITE_URL_ZIP_FILE=`echo $RESPONSE_URL_WITH_ZIP_FILE \
+  COMMERCE_SUITE_URL_ZIP_FILE=`echo $RESPONSE_URL_WITH_DETAILS \
   | python -mjson.tool | grep downloadUri | tail -1 | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//' | rev | cut -c 3- | rev`
+}
+
+function parseResponseUrlWithReleaseTime() {
+  COMMERCE_SUITE_RELEASE_TIME=`echo $RESPONSE_URL_WITH_DETAILS \
+  | python -mjson.tool | grep lastUpdated | awk '{print $2}' | sed -e 's/^"//' -e 's/"$//' | rev | cut -c 3- | rev`
 }
 
 function showCommerceSuiteDownloadUrl() {
   setCommerceSuiteDownloadUrl
+  setDownloadZipFileUrl
   echo $COMMERCE_SUITE_URL_ZIP_FILE
+}
+
+function showCommerceSuiteReleaseTime() {
+  setCommerceSuiteDownloadUrl
+  setResponseUrlWithDetails
+  parseResponseUrlWithReleaseTime
+  echo $COMMERCE_SUITE_RELEASE_TIME
 }
 
 function downloadCommerceSuite() {
   setCommerceSuiteDownloadUrl
+  setDownloadZipFileUrl
   echo $'\nstarting download of Commerce Suite from Artifactory...'
   wget --http-user=$USERNAME --http-password=$PASSWORD $COMMERCE_SUITE_URL_ZIP_FILE
 }
 
 OPTIND=1 # Reset in case getopts has been used previously in the shell.
 
-while getopts "hud" opt; do
+while getopts "hutd" opt; do
     case "$opt" in
     h)
         showHelp
         exit 0
         ;;
     u)  showCommerceSuiteDownloadUrl
+        ;;
+    t)  showCommerceSuiteReleaseTime
         ;;
     d)  downloadCommerceSuite
         ;;

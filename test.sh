@@ -52,4 +52,16 @@ testGetReleaseTimeFromResponse() {
   assertEquals $expectedValue $actualValue
 }
 
+testCutLastChars() {
+  # given
+  valueToCut='testString'
+  expectedValue='testStri'
+
+  # when
+  actualValue=$(echo $valueToCut | cutLastChars 3)
+
+  # then
+  assertEquals $expectedValue $actualValue
+}
+
 . ./shunit2/shunit2 # load shunit2

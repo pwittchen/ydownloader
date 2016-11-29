@@ -7,11 +7,11 @@ Note: **it's not official company project!**
 
 Contents
 --------
-- [Overview](#overview)
+- [Usage](#usage)
 - [Installation](#installation)
 - [Tests](#tests)
 
-Overview
+Usage
 --------
 
 ```

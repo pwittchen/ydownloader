@@ -54,7 +54,7 @@ function setDownloadEndpoint() {
   $API_URL/search/artifact\?name\=commerce-suite-$COMMERCE_SUITE_VERSION\&repos\=hybris-$ARTIFACT_TYPE)
   # get first endpoint for downloading Commerce Suite through Artifactory REST API
   COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT=$(echo $RESPONSE_WITH_URL_ENDPOINT | extractValueFromJson zip)
-  # get second endpoint from previously extracted endpoint from which download uri can be extracted
+  # get response from previously extracted endpoint from which download uri can be extracted
   RESPONSE_URL_WITH_DETAILS=$(curl -s -u $USERNAME:$PASSWORD $COMMERCE_SUITE_DOWNLOAD_URL_ENDPOINT)
 }
 

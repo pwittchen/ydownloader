@@ -14,6 +14,14 @@ Contents
 Usage
 --------
 
+Just run script as follows:
+
+```shell
+./ydownloader
+```
+
+You can use the following parameters:
+
 ```
   ydownloader is a script responsible
   for downloading SAP Hybris Commerce Suite from Artifactory

@@ -3,7 +3,7 @@ shell script for downloading SAP Hybris Commerce Suite
 
 gets your version of the suite within a single command
 
-Note: **it's not official company project!**
+**note**: it's not official company project!
 
 Contents
 --------

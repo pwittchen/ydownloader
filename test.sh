@@ -28,8 +28,7 @@ JSON_RESPONSE_STUB='{
   "uri": "https://artifactory-url.com/commerce-suite.zip"
 }'
 
-testGetDownloadUriFromResponse()
-{
+testGetDownloadUriFromResponse() {
   # given
   RESPONSE_URL_WITH_DETAILS=$JSON_RESPONSE_STUB
   expectedValue='https://artifactory-url.com/commerce-suite.zip'
@@ -41,8 +40,7 @@ testGetDownloadUriFromResponse()
   assertEquals $expectedValue $actualValue
 }
 
-testGetReleaseTimeFromResponse()
-{
+testGetReleaseTimeFromResponse() {
   # given
   RESPONSE_URL_WITH_DETAILS=$JSON_RESPONSE_STUB
   expectedValue='2016-11-28T15:35:00.685+01:00'

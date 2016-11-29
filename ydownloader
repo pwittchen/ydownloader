@@ -2,6 +2,12 @@
 
 set -e # automatically exit script on error
 
+# test mode is needed for execution of the unit tests
+if [ "$TEST_MODE" == "" ]
+then
+  TEST_MODE=false
+fi
+
 function showHelp() {
   echo "
         ydownloader is a script responsible
@@ -88,23 +94,28 @@ function downloadCommerceSuite() {
   wget --http-user=$USERNAME --http-password=$PASSWORD $(getValueFromResponse downloadUri)
 }
 
-OPTIND=1 # reset in case getopts has been used previously in the shell.
+# command line arguments are skipped in unit tests
+if [ "$TEST_MODE" = false ] ; then
+  OPTIND=1 # reset in case getopts has been used previously in the shell.
 
-while getopts "hutd" opt; do
-    case "$opt" in
-    h)
-        showHelp
-        exit 0
-        ;;
-    u)  showCommerceSuiteDownloadUrl
-        ;;
-    t)  showCommerceSuiteReleaseTime
-        ;;
-    d)  downloadCommerceSuite
-        ;;
-    esac
-done
+  while getopts "hutd" opt; do
+      case "$opt" in
+      h)
+          showHelp
+          exit 0
+          ;;
+      u)  showCommerceSuiteDownloadUrl
+          ;;
+      t)  showCommerceSuiteReleaseTime
+          ;;
+      d)  downloadCommerceSuite
+          ;;
+      esac
+  done
 
-shift $((OPTIND-1))
+  shift $((OPTIND-1))
 
-[ "$1" = "--" ] && shift
+  [ "$1" = "--" ] && shift
+else
+  echo "TEST_MODE enabled"
+fi

@@ -7,7 +7,7 @@ Contents
 --------
 - [Overview](#overview)
 - [Installation](#installation)
-- [Usage](#usage)
+- [Tests](#tests)
 
 Overview
 --------
@@ -27,11 +27,20 @@ Installation
 ------------
 
 with **wget**:
-```
+```shell
 sh -c "$(wget https://raw.githubusercontent.com/pwittchen/ydownloader/master/install.sh -O -)"
 ```
 
 with **curl**:
-```
+```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/pwittchen/ydownloader/master/install.sh)"
+```
+
+Tests
+-----
+
+Unit tests use [shunit2](https://github.com/kward/shunit2). In order to exectute them, run:
+
+```shell
+./test.sh
 ```

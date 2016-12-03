@@ -8,6 +8,8 @@ then
   TEST_MODE=false
 fi
 
+CONF_FILE=$HOME/.ydownloader.conf
+
 function showHelp() {
   echo "
         ydownloader is a script responsible
@@ -17,6 +19,8 @@ function showHelp() {
           -d    downloading Commerce Suite
           -u    showing Commerce Suite Download Url
           -t    showing Commerce Suite Release Time
+          -s    saving username and password to Artifactory
+          -c    clearing username and password
           -h    showing help
         "
 }
@@ -36,11 +40,31 @@ function setArtifactType() {
   fi
 }
 
+function saveUsernameAndPassword() {
+  clearUsernameAndPassword
+  setUsernameAndPassword
+  echo "USERNAME=$(echo $USERNAME);PASSWORD=$(echo $PASSWORD)" > $CONF_FILE
+  echo $'\nusername and password are saved'
+}
+
+function clearUsernameAndPassword() {
+  if [ ! -f $CONF_FILE ]; then
+    echo 'there was no configuration file to remove'
+  else
+    rm $CONF_FILE
+    echo 'username and password were removed'
+  fi
+}
+
 function setUsernameAndPassword() {
-  echo -n "SAP username (e-mail): "
-  read USERNAME
-  echo -n "SAP password: "
-  read -s PASSWORD
+  if [ ! -f $CONF_FILE ]; then
+    echo -n "SAP username (e-mail): "
+    read USERNAME
+    echo -n "SAP password: "
+    read -s PASSWORD
+  else
+    . $CONF_FILE
+  fi
 }
 
 function setCommerceSuiteDownloadUrl() {
@@ -98,11 +122,15 @@ function downloadCommerceSuite() {
 if [ "$TEST_MODE" = false ] ; then
   OPTIND=1 # reset in case getopts has been used previously in the shell.
 
-  while getopts "hutd" opt; do
+  while getopts "hscutd" opt; do
       case "$opt" in
       h)
           showHelp
           exit 0
+          ;;
+      s)  saveUsernameAndPassword
+          ;;
+      c)  clearUsernameAndPassword
           ;;
       u)  showCommerceSuiteDownloadUrl
           ;;

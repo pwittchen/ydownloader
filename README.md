@@ -30,6 +30,8 @@ You can use the following parameters:
     -d    downloading Commerce Suite
     -u    showing Commerce Suite Download Url
     -t    showing Commerce Suite Release Time
+    -s    saving username and password to Artifactory
+    -c    clearing username and password
     -h    showing help
 ```
 

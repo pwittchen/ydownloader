@@ -41,6 +41,7 @@ function setArtifactType() {
 }
 
 function saveUsernameAndPassword() {
+  echo 'removing configuration file in order to save fresh credentials'
   clearUsernameAndPassword
   setUsernameAndPassword
   echo "USERNAME=$(echo $USERNAME);PASSWORD=$(echo $PASSWORD)" > $CONF_FILE
@@ -52,7 +53,12 @@ function clearUsernameAndPassword() {
     echo 'there was no configuration file to remove'
   else
     rm -i $CONF_FILE
-    echo 'username and password were removed'
+    if [ ! -f $CONF_FILE ]; then
+      echo 'username and password were removed'
+    else
+      echo 'username and password were NOT removed'
+      exit 0
+    fi
   fi
 }
 
@@ -72,7 +78,7 @@ function setCommerceSuiteDownloadUrl() {
   setArtifactType
   setUsernameAndPassword
 
-  echo $'\ngetting Commerce Suite details from Artifactory...'
+  echo 'getting Commerce Suite details from Artifactory...'
 
   setDownloadEndpoint
 }

@@ -51,7 +51,7 @@ function clearUsernameAndPassword() {
   if [ ! -f $CONF_FILE ]; then
     echo 'there was no configuration file to remove'
   else
-    rm $CONF_FILE
+    rm -i $CONF_FILE
     echo 'username and password were removed'
   fi
 }

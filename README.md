@@ -8,7 +8,7 @@ gets your version of the suite within a single command
 Contents
 --------
 - [Usage](#usage)
-- [Installation](#installation)
+- [Installation/update](#installation-update)
 - [Tests](#tests)
 
 Usage
@@ -35,8 +35,8 @@ You can use the following parameters:
     -h    showing help
 ```
 
-Installation
-------------
+Installation/update
+-------------------
 
 with **wget**:
 ```shell

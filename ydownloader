@@ -41,7 +41,7 @@ function setArtifactType() {
 }
 
 function saveUsernameAndPassword() {
-  echo 'removing configuration file in order to save fresh credentials'
+  echo "removing configuration file in order to save fresh credentials"
   clearUsernameAndPassword
   setUsernameAndPassword
   echo "USERNAME=$(echo $USERNAME);PASSWORD=$(echo $PASSWORD)" > $CONF_FILE
@@ -50,13 +50,13 @@ function saveUsernameAndPassword() {
 
 function clearUsernameAndPassword() {
   if [ ! -f $CONF_FILE ]; then
-    echo 'there was no configuration file to remove'
+    echo "there was no configuration file to remove"
   else
     rm -i $CONF_FILE
     if [ ! -f $CONF_FILE ]; then
-      echo 'username and password were removed'
+      echo "username and password were removed"
     else
-      echo 'username and password were NOT removed'
+      echo "username and password were NOT removed"
       exit 0
     fi
   fi
@@ -77,9 +77,7 @@ function setCommerceSuiteDownloadUrl() {
   setCommerceSuiteVersion
   setArtifactType
   setUsernameAndPassword
-
-  echo 'getting Commerce Suite details from Artifactory...'
-
+  echo "getting Commerce Suite details from Artifactory..."
   setDownloadEndpoint
 }
 
@@ -120,8 +118,16 @@ function showCommerceSuiteReleaseTime() {
 
 function downloadCommerceSuite() {
   setCommerceSuiteDownloadUrl
-  echo $'\nstarting download of Commerce Suite from Artifactory...'
-  wget --http-user=$USERNAME --http-password=$PASSWORD $(getValueFromResponse downloadUri)
+  echo "Checking if desired version of the Commerce Suite is available in the current directory"
+  downloadPath="$(getValueFromResponse downloadUri)"
+
+  if [ ! -f $(basename $downloadPath) ]; then
+    echo "starting download of Commerce Suite from Artifactory..."
+    wget --http-user=$USERNAME --http-password=$PASSWORD $downloadPath
+  else
+    echo "You are already up to date with your desired Commerce Suite"
+    echo "If you want to re-download it, remove *.zip file from the current directory"
+  fi
 }
 
 # command line arguments are skipped in unit tests

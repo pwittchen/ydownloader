@@ -125,7 +125,7 @@ function downloadCommerceSuite() {
     echo "starting download of Commerce Suite from Artifactory..."
     wget --http-user=$USERNAME --http-password=$PASSWORD $downloadPath
   else
-    echo "You are already up to date with your desired Commerce Suite"
+    echo "You are already up to date with your desired Commerce Suite version"
     echo "If you want to re-download it, remove *.zip file from the current directory"
   fi
 }

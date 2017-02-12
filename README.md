@@ -1,7 +1,7 @@
 # ydownloader [![Build Status](https://travis-ci.org/pwittchen/ydownloader.svg?branch=master)](https://travis-ci.org/pwittchen/ydownloader)
 shell script for downloading SAP Hybris Commerce Suite
 
-gets your version of the suite within a single command
+gets your version of the suite within a single command (on Linux and macOS)
 
 **note**: it's not official company project!
 

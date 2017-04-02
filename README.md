@@ -4,7 +4,7 @@ shell script for downloading SAP Hybris Commerce Suite from Artifactory
 gets your version of the suite within a single command (on Linux and macOS)
 
 - **note #1**: it's not official company project!
-- **note #2**: you need to have account in Hybris Artifactory to use it!
+- **note #2**: you need to have an account in Hybris Artifactory to use it!
 
 Contents
 --------

@@ -5,7 +5,7 @@ gets your version of the suite within a single command (on Linux and macOS)
 
 - **note #1**: it's not official company project!
 - **note #2**: you need to have an account in Hybris Artifactory to use it!
-- **note #3**: it may not work properly for the latest version due to changed versioning standard - it's better to provide version name (or it's first part) explicitely (e.g. `18` or `18.08`)
+- **note #3**: it may not work properly for the latest version due to changed versioning standard - it's better to provide version name (or its first part) explicitely (e.g. `18` or `18.08`) - you can do that via CLI when script asks you for the version number
 
 Contents
 --------

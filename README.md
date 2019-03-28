@@ -3,9 +3,11 @@ shell script for downloading SAP Hybris Commerce Suite from Artifactory
 
 gets your version of the suite within a single command (on Linux and macOS)
 
-- **note #1**: it's not official company project!
-- **note #2**: you need to have an account in Hybris Artifactory to use it!
-- **note #3**: it may not work properly for the latest version due to changed versioning standard - it's better to provide version name (or its first part) explicitely (e.g. `18` or `1811`) - you can do that via CLI when script asks you for the version number
+**notes**:
+- it's not official company project!
+- you need to have an account in Hybris Artifactory to use it!
+- it may not work properly for the latest version due to changed versioning standard - it's better to provide version name (or its first part) explicitely (e.g. `18` or `1811`) - you can do that via CLI when script asks you for the version number
+- this project probably will be outdated and deprecated once all artifacts will be migrated from Artifactory to Nexus
 
 Contents
 --------
